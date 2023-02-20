@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=user_profile
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Admin123!
+    ports:
+      - "5432:5432"
+  web:
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    # depends_on:
+    #   - "db"
+    expose: 
+      - 8000
+    command: >
+      bash -c 'pip install -r requirements.txt 
+      && python manage.py makemigrations 
+      && python manage.py migrate 
+      && python manage.py runserver 0.0.0.0:8000'
+
+volumes:
+  postgres_data:
+
+#       && source setup_admin.sh 

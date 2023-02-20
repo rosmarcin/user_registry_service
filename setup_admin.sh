@@ -1,0 +1,1 @@
+echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin','admin@gmail.com','Admin123!')" | python manage.py shell 
